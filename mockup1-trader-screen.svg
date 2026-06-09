@@ -1,0 +1,302 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 230 460" width="230" height="460" font-family="-apple-system,Helvetica Neue,Arial,sans-serif">
+  <defs>
+    <!-- Phone body gradient -->
+    <linearGradient id="phoneBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1E1E2A"/>
+      <stop offset="100%" stop-color="#111118"/>
+    </linearGradient>
+    <!-- Depth bars for asks (red) -->
+    <linearGradient id="askDepth" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#EF3124" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#EF3124" stop-opacity="0.08"/>
+    </linearGradient>
+    <!-- Depth bars for bids (green) -->
+    <linearGradient id="bidDepth" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#17C964" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#17C964" stop-opacity="0.08"/>
+    </linearGradient>
+    <clipPath id="phoneClip">
+      <rect x="4" y="6" width="222" height="448" rx="28" ry="28"/>
+    </clipPath>
+    <clipPath id="chartClip">
+      <rect x="4" y="86" width="222" height="86"/>
+    </clipPath>
+    <clipPath id="splitClip">
+      <rect x="4" y="172" width="222" height="281"/>
+    </clipPath>
+  </defs>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- PHONE FRAME -->
+  <!-- ═══════════════════════════════════════ -->
+  <!-- Shadow -->
+  <rect x="8" y="12" width="222" height="448" rx="30" ry="30" fill="rgba(0,0,0,0.5)" filter="blur(8px)"/>
+  <!-- Body -->
+  <rect x="4" y="6" width="222" height="448" rx="28" ry="28" fill="url(#phoneBg)" stroke="#2A2A38" stroke-width="1.5"/>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- STATUS BAR (y=6–30) -->
+  <!-- ═══════════════════════════════════════ -->
+  <rect x="4" y="6" width="222" height="38" rx="28" ry="28" fill="#111118" clip-path="url(#phoneClip)"/>
+  <!-- Notch pill -->
+  <rect x="82" y="8" width="66" height="14" rx="7" fill="#0A0A0F"/>
+  <!-- Time -->
+  <text x="18" y="22" font-size="8" font-weight="600" fill="#FFFFFF">9:41</text>
+  <!-- Status icons -->
+  <text x="168" y="22" font-size="7" fill="rgba(255,255,255,0.7)">●●●</text>
+  <text x="183" y="22" font-size="7" fill="rgba(255,255,255,0.7)">◆</text>
+  <text x="196" y="22" font-size="7" fill="rgba(255,255,255,0.7)">▮▮▮</text>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- APP HEADER (y=30–86) -->
+  <!-- ═══════════════════════════════════════ -->
+  <rect x="4" y="30" width="222" height="56" fill="#161620" clip-path="url(#phoneClip)"/>
+  <!-- Bottom border -->
+  <line x1="4" y1="85.5" x2="226" y2="85.5" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+
+  <!-- Back arrow -->
+  <text x="13" y="55" font-size="10" fill="rgba(255,255,255,0.55)">‹</text>
+
+  <!-- Ticker SBER -->
+  <text x="30" y="50" font-size="11" font-weight="700" fill="#FFFFFF">SBER</text>
+
+  <!-- Badge ⚡РЕЖИМ -->
+  <rect x="64" y="40" width="52" height="16" rx="8" fill="rgba(239,49,36,0.18)" stroke="rgba(239,49,36,0.4)" stroke-width="0.75"/>
+  <text x="68" y="51" font-size="7.5" font-weight="700" fill="#EF3124">⚡РЕЖИМ</text>
+
+  <!-- Price -->
+  <text x="126" y="50" font-size="10.5" font-weight="700" fill="#FFFFFF">319,55</text>
+  <!-- Change -->
+  <text x="168" y="50" font-size="9" font-weight="600" fill="#EF3124">−0,14%</text>
+
+  <!-- Sub: bid/ask mini row -->
+  <text x="30" y="68" font-size="7.5" fill="#17C964">319,54</text>
+  <text x="60" y="68" font-size="7.5" fill="rgba(255,255,255,0.3)">bid</text>
+  <text x="150" y="68" font-size="7.5" fill="#EF3124">319,55</text>
+  <text x="174" y="68" font-size="7.5" fill="rgba(255,255,255,0.3)">ask</text>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- CHART AREA (y=86–172) -->
+  <!-- ═══════════════════════════════════════ -->
+  <rect x="4" y="86" width="222" height="86" fill="#111118" clip-path="url(#phoneClip)"/>
+
+  <!-- Grid lines -->
+  <line x1="4" y1="105" x2="226" y2="105" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+  <line x1="4" y1="120" x2="226" y2="120" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+  <line x1="4" y1="135" x2="226" y2="135" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+  <line x1="4" y1="150" x2="226" y2="150" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+  <line x1="4" y1="165" x2="226" y2="165" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+
+  <!-- Candles — общий нисходящий тренд -->
+  <!-- Green candles -->
+  <!-- x=11 green -->
+  <line x1="13" y1="112" x2="13" y2="130" stroke="#17C964" stroke-width="0.75"/>
+  <rect x="11" y="115" width="4" height="11" fill="#17C964"/>
+  <!-- x=23 green -->
+  <line x1="25" y1="110" x2="25" y2="128" stroke="#17C964" stroke-width="0.75"/>
+  <rect x="23" y="113" width="4" height="10" fill="#17C964"/>
+  <!-- x=35 red -->
+  <line x1="37" y1="114" x2="37" y2="133" stroke="#EF3124" stroke-width="0.75"/>
+  <rect x="35" y="116" width="4" height="12" fill="#EF3124"/>
+  <!-- x=47 red -->
+  <line x1="49" y1="116" x2="49" y2="135" stroke="#EF3124" stroke-width="0.75"/>
+  <rect x="47" y="118" width="4" height="11" fill="#EF3124"/>
+  <!-- x=59 green -->
+  <line x1="61" y1="117" x2="61" y2="131" stroke="#17C964" stroke-width="0.75"/>
+  <rect x="59" y="119" width="4" height="9" fill="#17C964"/>
+  <!-- x=71 green -->
+  <line x1="73" y1="116" x2="73" y2="130" stroke="#17C964" stroke-width="0.75"/>
+  <rect x="71" y="118" width="4" height="8" fill="#17C964"/>
+  <!-- x=83 red -->
+  <line x1="85" y1="119" x2="85" y2="137" stroke="#EF3124" stroke-width="0.75"/>
+  <rect x="83" y="121" width="4" height="12" fill="#EF3124"/>
+  <!-- x=95 red -->
+  <line x1="97" y1="121" x2="97" y2="138" stroke="#EF3124" stroke-width="0.75"/>
+  <rect x="95" y="123" width="4" height="10" fill="#EF3124"/>
+  <!-- x=107 red -->
+  <line x1="109" y1="123" x2="109" y2="140" stroke="#EF3124" stroke-width="0.75"/>
+  <rect x="107" y="125" width="4" height="10" fill="#EF3124"/>
+  <!-- x=119 green -->
+  <line x1="121" y1="122" x2="121" y2="136" stroke="#17C964" stroke-width="0.75"/>
+  <rect x="119" y="124" width="4" height="8" fill="#17C964"/>
+  <!-- x=131 red -->
+  <line x1="133" y1="125" x2="133" y2="142" stroke="#EF3124" stroke-width="0.75"/>
+  <rect x="131" y="127" width="4" height="11" fill="#EF3124"/>
+  <!-- x=143 green -->
+  <line x1="145" y1="124" x2="145" y2="138" stroke="#17C964" stroke-width="0.75"/>
+  <rect x="143" y="126" width="4" height="8" fill="#17C964"/>
+  <!-- x=155 red -->
+  <line x1="157" y1="127" x2="157" y2="144" stroke="#EF3124" stroke-width="0.75"/>
+  <rect x="155" y="129" width="4" height="11" fill="#EF3124"/>
+  <!-- x=167 red -->
+  <line x1="169" y1="129" x2="169" y2="146" stroke="#EF3124" stroke-width="0.75"/>
+  <rect x="167" y="131" width="4" height="11" fill="#EF3124"/>
+  <!-- x=179 red -->
+  <line x1="181" y1="130" x2="181" y2="148" stroke="#EF3124" stroke-width="0.75"/>
+  <rect x="179" y="132" width="4" height="12" fill="#EF3124"/>
+  <!-- x=191 red -->
+  <line x1="193" y1="133" x2="193" y2="150" stroke="#EF3124" stroke-width="0.75"/>
+  <rect x="191" y="135" width="4" height="11" fill="#EF3124"/>
+  <!-- x=203 red -->
+  <line x1="205" y1="135" x2="205" y2="152" stroke="#EF3124" stroke-width="0.75"/>
+  <rect x="203" y="137" width="4" height="11" fill="#EF3124"/>
+  <!-- x=215 red (last, biggest drop) -->
+  <line x1="217" y1="136" x2="217" y2="155" stroke="#EF3124" stroke-width="0.75"/>
+  <rect x="215" y="138" width="4" height="13" fill="#EF3124"/>
+
+  <!-- Timeframe tabs -->
+  <text x="8" y="170" font-size="7" fill="rgba(255,255,255,0.35)">1М</text>
+  <text x="24" y="170" font-size="7" fill="rgba(255,255,255,0.35)">5М</text>
+  <!-- Active tab 1Ч -->
+  <rect x="36" y="161" width="14" height="10" rx="3" fill="rgba(239,49,36,0.2)"/>
+  <text x="38" y="170" font-size="7" font-weight="700" fill="#EF3124">1Ч</text>
+  <text x="55" y="170" font-size="7" fill="rgba(255,255,255,0.35)">1Д</text>
+
+  <!-- Bottom border chart -->
+  <line x1="4" y1="172" x2="226" y2="172" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SPLIT SCREEN (y=172–453) -->
+  <!-- ═══════════════════════════════════════ -->
+
+  <!-- Left bg (form) -->
+  <rect x="4" y="172" width="111" height="281" fill="#161620" clip-path="url(#phoneClip)"/>
+  <!-- Right bg (orderbook) -->
+  <rect x="115" y="172" width="111" height="281" fill="#111118" clip-path="url(#phoneClip)"/>
+
+  <!-- Vertical divider -->
+  <line x1="114" y1="172" x2="114" y2="453" stroke="rgba(255,255,255,0.1)" stroke-width="0.75"/>
+
+  <!-- ─────────────────────────────── -->
+  <!-- LEFT: ORDER FORM -->
+  <!-- ─────────────────────────────── -->
+
+  <!-- Toggle Купить / Продать (y=174–196) -->
+  <rect x="6" y="174" width="106" height="20" rx="6" fill="#1E1E2A"/>
+  <!-- Active: Купить -->
+  <rect x="7" y="175" width="52" height="18" rx="5" fill="#17C964"/>
+  <text x="33" y="187" font-size="8" font-weight="700" fill="#000000" text-anchor="middle">Купить</text>
+  <!-- Inactive: Продать -->
+  <text x="84" y="187" font-size="8" fill="rgba(255,255,255,0.45)" text-anchor="middle">Продать</text>
+
+  <!-- Тип заявки (y=200–214) -->
+  <rect x="6" y="200" width="106" height="16" rx="5" fill="#1A1A26" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+  <text x="12" y="211" font-size="7.5" fill="#FFFFFF">Лимит</text>
+  <text x="102" y="211" font-size="8" fill="rgba(255,255,255,0.45)" text-anchor="end">▾</text>
+
+  <!-- Label Цена (y=218–224) -->
+  <text x="6" y="224" font-size="7" fill="rgba(255,255,255,0.4)">Цена, ₽</text>
+  <!-- Поле цены (y=226–240) -->
+  <rect x="6" y="226" width="106" height="16" rx="5" fill="#1A1A26" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+  <text x="12" y="237" font-size="8" font-weight="600" fill="#FFFFFF">319,54</text>
+  <text x="108" y="237" font-size="7" fill="rgba(255,255,255,0.3)" text-anchor="end">₽</text>
+
+  <!-- Label Кол-во (y=244–250) -->
+  <text x="6" y="250" font-size="7" fill="rgba(255,255,255,0.4)">Лоты</text>
+  <!-- Поле лотов (y=252–266) -->
+  <rect x="6" y="252" width="106" height="16" rx="5" fill="#1A1A26" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+  <text x="12" y="263" font-size="8" font-weight="600" fill="#FFFFFF">1 лот</text>
+  <!-- +/- -->
+  <text x="96" y="263" font-size="9" fill="rgba(255,255,255,0.4)">+</text>
+  <line x1="88" y1="257" x2="92" y2="257" stroke="rgba(255,255,255,0.4)" stroke-width="1.2"/>
+
+  <!-- Слайдер (y=270–276) -->
+  <rect x="6" y="272" width="106" height="4" rx="2" fill="#2A2A38"/>
+  <rect x="6" y="272" width="27" height="4" rx="2" fill="#17C964"/>
+  <!-- Thumb -->
+  <circle cx="33" cy="274" r="4" fill="#FFFFFF" stroke="#17C964" stroke-width="1.2"/>
+  <!-- Labels -->
+  <text x="6" y="284" font-size="6" fill="rgba(255,255,255,0.3)">0%</text>
+  <text x="26" y="284" font-size="6" fill="#17C964">25%</text>
+  <text x="60" y="284" font-size="6" fill="rgba(255,255,255,0.3)">50%</text>
+  <text x="100" y="284" font-size="6" fill="rgba(255,255,255,0.3)" text-anchor="end">100%</text>
+
+  <!-- Итого (y=289–296) -->
+  <text x="6" y="296" font-size="7" fill="rgba(255,255,255,0.4)">Итого</text>
+  <text x="110" y="296" font-size="7.5" font-weight="600" fill="#FFFFFF" text-anchor="end">319,54 ₽</text>
+
+  <!-- Кнопка КУПИТЬ (y=300–322) -->
+  <rect x="6" y="300" width="106" height="22" rx="7" fill="#17C964"/>
+  <text x="59" y="315" font-size="8.5" font-weight="700" fill="#000000" text-anchor="middle">КУПИТЬ SBER</text>
+
+  <!-- Доступно -->
+  <text x="6" y="335" font-size="6.5" fill="rgba(255,255,255,0.3)">На счёте: 963 ₽</text>
+
+  <!-- ─────────────────────────────── -->
+  <!-- RIGHT: ORDERBOOK -->
+  <!-- ─────────────────────────────── -->
+
+  <!-- Header: Стакан label -->
+  <text x="170" y="185" font-size="7" fill="rgba(255,255,255,0.4)" text-anchor="middle">стакан</text>
+
+  <!-- Column headers -->
+  <text x="120" y="195" font-size="6.5" fill="rgba(255,255,255,0.25)">Цена</text>
+  <text x="225" y="195" font-size="6.5" fill="rgba(255,255,255,0.25)" text-anchor="end">Объём</text>
+
+  <!-- ASK rows (y=198–288, 5 rows × 18px) -->
+  <!-- Ask depth bars (proportional to volume, max width ~28px from right edge x=225) -->
+  <!-- Row 1: 319,60 | 3 257 -->
+  <rect x="197" y="199" width="28" height="16" rx="1" fill="rgba(239,49,36,0.15)"/>
+  <text x="120" y="211" font-size="7.5" fill="#EF3124">319,60</text>
+  <text x="225" y="211" font-size="7.5" fill="#EF3124" text-anchor="end">3 257</text>
+  <!-- Row 2: 319,59 | 2 665 -->
+  <rect x="202" y="217" width="23" height="16" rx="1" fill="rgba(239,49,36,0.15)"/>
+  <text x="120" y="229" font-size="7.5" fill="#EF3124">319,59</text>
+  <text x="225" y="229" font-size="7.5" fill="#EF3124" text-anchor="end">2 665</text>
+  <!-- Row 3: 319,58 | 618 -->
+  <rect x="220" y="235" width="5" height="16" rx="1" fill="rgba(239,49,36,0.15)"/>
+  <text x="120" y="247" font-size="7.5" fill="#EF3124">319,58</text>
+  <text x="225" y="247" font-size="7.5" fill="#EF3124" text-anchor="end">618</text>
+  <!-- Row 4: 319,57 | 4 020 -->
+  <rect x="191" y="253" width="34" height="16" rx="1" fill="rgba(239,49,36,0.15)"/>
+  <!-- Clamp depth bar to right half -->
+  <text x="120" y="265" font-size="7.5" fill="#EF3124">319,57</text>
+  <text x="225" y="265" font-size="7.5" fill="#EF3124" text-anchor="end">4 020</text>
+  <!-- Row 5: 319,56 | 1 250 -->
+  <rect x="214" y="271" width="11" height="16" rx="1" fill="rgba(239,49,36,0.15)"/>
+  <text x="120" y="283" font-size="7.5" fill="#EF3124">319,56</text>
+  <text x="225" y="283" font-size="7.5" fill="#EF3124" text-anchor="end">1 250</text>
+
+  <!-- SPREAD DIVIDER (y=289–308) -->
+  <rect x="116" y="290" width="112" height="1" fill="rgba(255,255,255,0.12)"/>
+  <!-- Current price pill -->
+  <rect x="134" y="292" width="72" height="14" rx="7" fill="rgba(239,49,36,0.22)" stroke="rgba(239,49,36,0.5)" stroke-width="0.75"/>
+  <text x="170" y="302" font-size="7.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">● 319,55</text>
+
+  <!-- BID rows (y=308–398, 5 rows × 18px) -->
+  <!-- Row 1: 319,54 | 3 954 -->
+  <rect x="197" y="309" width="28" height="16" rx="1" fill="rgba(23,201,100,0.15)"/>
+  <text x="120" y="321" font-size="7.5" fill="#17C964">319,54</text>
+  <text x="225" y="321" font-size="7.5" fill="#17C964" text-anchor="end">3 954</text>
+  <!-- Row 2: 319,53 | 303 -->
+  <rect x="222" y="327" width="3" height="16" rx="1" fill="rgba(23,201,100,0.15)"/>
+  <text x="120" y="339" font-size="7.5" fill="#17C964">319,53</text>
+  <text x="225" y="339" font-size="7.5" fill="#17C964" text-anchor="end">303</text>
+  <!-- Row 3: 319,52 | 10 005 -->
+  <rect x="184" y="345" width="41" height="16" rx="1" fill="rgba(23,201,100,0.2)"/>
+  <text x="120" y="357" font-size="7.5" fill="#17C964">319,52</text>
+  <text x="225" y="357" font-size="7.5" fill="#17C964" text-anchor="end">10 005</text>
+  <!-- Row 4: 319,51 | 1 158 -->
+  <rect x="215" y="363" width="10" height="16" rx="1" fill="rgba(23,201,100,0.15)"/>
+  <text x="120" y="375" font-size="7.5" fill="#17C964">319,51</text>
+  <text x="225" y="375" font-size="7.5" fill="#17C964" text-anchor="end">1 158</text>
+  <!-- Row 5: 319,50 | 1 200 -->
+  <rect x="215" y="381" width="10" height="16" rx="1" fill="rgba(23,201,100,0.15)"/>
+  <text x="120" y="393" font-size="7.5" fill="#17C964">319,50</text>
+  <text x="225" y="393" font-size="7.5" fill="#17C964" text-anchor="end">1 200</text>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- BOTTOM SAFE AREA + HOME BAR -->
+  <!-- ═══════════════════════════════════════ -->
+  <rect x="4" y="440" width="222" height="14" fill="#111118" clip-path="url(#phoneClip)"/>
+  <!-- Home bar -->
+  <rect x="85" y="450" width="60" height="4" rx="2" fill="rgba(255,255,255,0.2)"/>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- PHONE FRAME BORDER (top layer) -->
+  <!-- ═══════════════════════════════════════ -->
+  <rect x="4" y="6" width="222" height="448" rx="28" ry="28" fill="none" stroke="#2A2A38" stroke-width="1.5"/>
+  <!-- Inner highlight -->
+  <rect x="5" y="7" width="220" height="446" rx="27" ry="27" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+</svg>

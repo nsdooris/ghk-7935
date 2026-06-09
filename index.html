@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GHK-7935 — Trader Mode Fake Door</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0A0A0F; color: #fff; font-family: -apple-system, sans-serif; padding: 40px 24px; }
+    h1 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .sub { color: rgba(255,255,255,0.4); font-size: 14px; margin-bottom: 40px; }
+    .variants { display: flex; flex-direction: column; gap: 12px; max-width: 420px; }
+    .variant { display: block; padding: 16px 20px; background: #161620; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; text-decoration: none; color: inherit; }
+    .variant:hover { border-color: rgba(239,49,36,0.4); background: #1E1E2A; }
+    .label { font-size: 11px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+    .name { font-size: 16px; font-weight: 600; }
+    .desc { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 4px; }
+    .tag { display: inline-block; margin-top: 8px; font-size: 11px; padding: 2px 8px; border-radius: 10px; background: rgba(239,49,36,0.15); color: #EF3124; }
+  </style>
+</head>
+<body>
+  <h1>GHK-7935 · Trader Mode Fake Door</h1>
+  <p class="sub">Эксперимент E-006 · 4 варианта по сегментам</p>
+
+  <div class="variants">
+    <a class="variant" href="landing-b.html">
+      <div class="label">Variant B</div>
+      <div class="name">AI-Trader-M</div>
+      <div class="desc">≥5 сделок/нед · максимальная интенсивность</div>
+      <span class="tag">Pulse + Badge</span>
+    </a>
+    <a class="variant" href="landing-c.html">
+      <div class="label">Variant C</div>
+      <div class="name">Borderline</div>
+      <div class="desc">3–5 сделок/нед · «Следующий уровень»</div>
+      <span class="tag">Pulse</span>
+    </a>
+    <a class="variant" href="landing-d.html">
+      <div class="label">Variant D</div>
+      <div class="name">Investor</div>
+      <div class="desc">1–4 сделки/нед · «Готов торговать активнее?»</div>
+    </a>
+    <a class="variant" href="landing-e.html">
+      <div class="label">Variant E</div>
+      <div class="name">Passive Holder</div>
+      <div class="desc">≤0.25 сделки/нед · наблюдатель</div>
+    </a>
+  </div>
+</body>
+</html>

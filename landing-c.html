@@ -1,0 +1,990 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Трейдерский режим — Альфа-Инвестиции</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --red: #EF3124;
+    --red-dark: #C4261C;
+    --bg: #0A0A0F;
+    --bg2: #111118;
+    --bg3: #1A1A26;
+    --bg4: #22222F;
+    --border: rgba(255,255,255,0.08);
+    --text: #FFFFFF;
+    --text2: rgba(255,255,255,0.65);
+    --text3: rgba(255,255,255,0.35);
+    --green: #17C964;
+    --green-dim: rgba(23,201,100,0.15);
+    --red-dim: rgba(239,49,36,0.15);
+  }
+
+  body {
+    font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex;
+    align-items: center;
+    padding: max(16px, env(safe-area-inset-top)) 24px 16px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(10,10,15,0.95);
+    backdrop-filter: blur(16px);
+    z-index: 100;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo-mark {
+    width: 32px; height: 32px; background: var(--red);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 16px; color: #fff;
+  }
+  .logo-text { font-size: 15px; font-weight: 600; color: var(--text2); }
+  .header-badge {
+    margin-left: auto;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+    color: var(--green); text-transform: uppercase;
+    background: var(--green-dim); padding: 4px 12px; border-radius: 100px;
+    border: 1px solid rgba(23,201,100,0.3);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .dot {
+    width: 6px; height: 6px; background: var(--green);
+    border-radius: 50%;
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 72px 24px 56px;
+    text-align: center;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(239,49,36,0.14) 0%, transparent 70%);
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
+    color: var(--text3); text-transform: uppercase;
+    border: 1px solid var(--border); border-radius: 100px;
+    padding: 6px 16px; margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: clamp(32px, 8vw, 56px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+  }
+  .hero h1 span { color: var(--red); }
+  .hero-sub {
+    font-size: clamp(15px, 3.5vw, 18px);
+    color: var(--text2);
+    max-width: 500px;
+    margin: 0 auto 40px;
+    line-height: 1.6;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--red); color: #fff; font-size: 16px; font-weight: 700;
+    padding: 16px 32px; border-radius: 14px; text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    cursor: pointer; border: none;
+  }
+  .hero-cta:active { background: var(--red-dark); transform: translateY(-1px); }
+  .hero-cta-note { margin-top: 12px; font-size: 12px; color: var(--text3); }
+
+  .divider { height: 1px; background: var(--border); margin: 0; }
+
+  /* ── PROBLEM ── */
+  .problem-section { padding: 64px 24px; }
+  .problem-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--red); margin-bottom: 14px;
+  }
+  .section-title {
+    font-size: clamp(26px, 5vw, 40px);
+    font-weight: 800; letter-spacing: -0.025em;
+    line-height: 1.15; margin-bottom: 14px;
+  }
+  .section-sub { font-size: 15px; color: var(--text2); max-width: 520px; line-height: 1.65; margin-bottom: 40px; }
+
+  .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .problem-card {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 18px; padding: 24px;
+  }
+  .problem-icon {
+    width: 44px; height: 44px; background: var(--red-dim);
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-size: 20px; margin-bottom: 14px;
+  }
+  .problem-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+  .problem-card p { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+  /* ── PHONE MOCKUP ── */
+  .phone-frame {
+    width: 220px; flex-shrink: 0;
+    filter: drop-shadow(0 24px 48px rgba(0,0,0,0.55));
+  }
+  .phone-frame svg { width: 100%; height: auto; }
+  .phone-frame img {
+    width: 100%;
+    height: auto;
+    border-radius: 28px;
+    display: block;
+  }
+
+  /* ── FEATURE ROW ── */
+  .feature-rows { display: flex; flex-direction: column; }
+  .feature-row {
+    display: flex; align-items: center; gap: 64px;
+    padding: 64px 24px; max-width: 1100px; margin: 0 auto; width: 100%;
+  }
+  .feature-row.reverse { flex-direction: row-reverse; }
+  .feature-text { flex: 1; }
+  .feature-text h2 {
+    font-size: clamp(22px, 4vw, 34px);
+    font-weight: 800; letter-spacing: -0.025em;
+    line-height: 1.2; margin-bottom: 14px;
+  }
+  .feature-text p { font-size: 15px; color: var(--text2); line-height: 1.7; margin-bottom: 20px; }
+  .feature-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-size: 12px; font-weight: 600; padding: 5px 13px;
+    border-radius: 100px; border: 1px solid var(--border);
+    background: var(--bg3); color: var(--text2);
+  }
+  .chip.red { background: var(--red-dim); border-color: rgba(239,49,36,0.3); color: var(--red); }
+
+  /* ── BEFORE/AFTER ── */
+  .compare-section { padding: 64px 24px; }
+  .compare-inner { max-width: 1100px; margin: 0 auto; }
+  .compare-wrapper {
+    display: flex; gap: 32px; align-items: flex-start; margin-top: 48px; justify-content: center;
+  }
+  .compare-col { flex: 1; max-width: 260px; }
+  .compare-label {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; margin-bottom: 18px; display: block;
+    color: var(--text3);
+  }
+  .compare-col.after .compare-label { color: var(--green); }
+  .compare-arrow {
+    font-size: 28px; align-self: center; color: var(--text3); flex-shrink: 0;
+    margin-top: 36px;
+  }
+
+  .metrics-row {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px; margin-top: 48px;
+  }
+  .metric-card {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 16px; padding: 22px; text-align: center;
+  }
+  .metric-card .label { font-size: 12px; color: var(--text3); margin-bottom: 10px; }
+  .metric-pair { display: flex; justify-content: center; align-items: center; gap: 12px; }
+  .metric-pair .from { font-size: 26px; font-weight: 800; color: var(--red); }
+  .metric-pair .arrow { font-size: 16px; color: var(--text3); }
+  .metric-pair .to { font-size: 26px; font-weight: 800; color: var(--green); }
+
+  /* ── FOR WHOM ── */
+  .whom-section { padding: 64px 24px; }
+  .whom-inner { max-width: 1100px; margin: 0 auto; }
+  .whom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 40px; }
+  .whom-card {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 16px; padding: 22px; display: flex; align-items: flex-start; gap: 14px;
+  }
+  .whom-icon {
+    width: 42px; height: 42px; background: var(--bg4);
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .whom-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .whom-card p { font-size: 13px; color: var(--text2); line-height: 1.5; }
+
+  /* ── SOCIAL PROOF ── */
+  .proof-section { padding: 48px 24px; }
+  .proof-inner { max-width: 1100px; margin: 0 auto; }
+  .proof-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 32px; }
+  .proof-card {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 16px; padding: 20px 22px;
+    display: flex; gap: 14px; align-items: center;
+  }
+  .proof-card span { font-size: 24px; }
+  .proof-card-text strong { display: block; font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+  .proof-card-text p { font-size: 12px; color: var(--text3); line-height: 1.4; }
+
+  /* ── CTA FINAL ── */
+  .cta-section {
+    padding: 72px 24px max(72px, calc(72px + env(safe-area-inset-bottom)));
+    text-align: center;
+    background: radial-gradient(ellipse 70% 80% at 50% 100%, rgba(239,49,36,0.08) 0%, transparent 70%);
+  }
+  .cta-inner { max-width: 520px; margin: 0 auto; }
+  .cta-section h2 {
+    font-size: clamp(26px, 6vw, 42px);
+    font-weight: 800; letter-spacing: -0.03em; margin-bottom: 14px;
+  }
+  .cta-section p { font-size: 15px; color: var(--text2); margin-bottom: 36px; line-height: 1.65; }
+  .cta-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--red); color: #fff; font-size: 16px; font-weight: 700;
+    padding: 16px 36px; border-radius: 14px; text-decoration: none;
+    transition: background 0.2s, transform 0.15s; width: 100%; justify-content: center;
+    max-width: 360px; cursor: pointer; border: none;
+  }
+  .cta-btn:active { background: var(--red-dark); transform: translateY(-1px); }
+  .cta-meta { margin-top: 14px; font-size: 12px; color: var(--text3); }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 28px 24px max(28px, env(safe-area-inset-bottom));
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    color: var(--text3); font-size: 12px;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 860px) {
+    .feature-row { flex-direction: column !important; gap: 32px; padding: 48px 20px; }
+    .problem-grid { grid-template-columns: 1fr; gap: 12px; }
+    .whom-grid { grid-template-columns: 1fr; gap: 12px; }
+    .proof-grid { grid-template-columns: 1fr; gap: 12px; }
+    .compare-wrapper { flex-direction: column; align-items: center; }
+    .compare-arrow { transform: rotate(90deg); margin: 0 auto; }
+    .phone-frame { width: 200px; }
+    .footer { flex-direction: column; gap: 10px; text-align: center; }
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 48px 20px 36px; }
+    .problem-section, .compare-section, .whom-section, .proof-section, .cta-section { padding: 48px 20px; }
+    .hero-cta { width: 100%; justify-content: center; }
+    .metrics-row { grid-template-columns: 1fr; gap: 10px; }
+    .compare-col { max-width: 220px; }
+    .header-badge { display: none; }
+    .cta-btn { font-size: 15px; padding: 14px 24px; }
+    .phone-frame { width: 180px; }
+    .feature-text h2 { font-size: 22px; }
+  }
+
+  @media (max-width: 430px) {
+    .phone-frame { width: min(240px, 65vw); }
+    .feature-row { gap: 24px; }
+  }
+
+  @media (max-width: 375px) {
+    .hero { padding: 40px 16px 32px; }
+    .hero h1 { font-size: 28px; }
+    .phone-frame { width: min(220px, 60vw); }
+    .compare-col { max-width: 180px; }
+    .cta-btn, .hero-cta { font-size: 14px; padding: 14px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ───────── SUCCESS OVERLAY ───────── -->
+<div id="success-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(10,10,15,0.97); z-index:200; flex-direction:column; align-items:center; justify-content:center; padding:32px 24px; text-align:center;">
+  <div style="margin-bottom:24px;">
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="30" stroke="#17C964" stroke-width="3" fill="rgba(23,201,100,0.12)"/>
+      <polyline points="20,33 28,41 44,24" stroke="#17C964" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <h2 style="font-size:22px; font-weight:800; color:#fff; margin-bottom:12px; letter-spacing:-0.02em;">Отлично! Ты в числе первых.</h2>
+  <p style="font-size:15px; color:rgba(255,255,255,0.65); line-height:1.65; margin-bottom:8px; max-width:320px;">Трейдерский режим разрабатывается специально для таких активных инвесторов, как ты. Мы уведомим тебя, когда он будет готов. Пока наслаждайся текущими возможностями приложения.</p>
+  <p style="font-size:12px; color:rgba(255,255,255,0.35); margin-bottom:32px;">Это не активирует функцию прямо сейчас</p>
+  <button data-track="success-close" onclick="closeWebView()" style="width:100%; max-width:320px; padding:14px 24px; background:transparent; border:1px solid rgba(255,255,255,0.3); border-radius:12px; color:#fff; font-size:16px; font-weight:600; cursor:pointer;">Понятно</button>
+  <p id="bridge-fallback" style="display:none; margin-top:16px; font-size:13px; color:rgba(255,255,255,0.4);">Нажми "Назад", чтобы вернуться</p>
+</div>
+
+<!-- ───────── HEADER ───────── -->
+<header class="header">
+  <div class="logo">
+    <div class="logo-mark">А</div>
+    <span class="logo-text">Альфа-Инвестиции</span>
+  </div>
+  <span class="header-badge"><span class="dot"></span>Новинка</span>
+</header>
+
+<!-- ───────── HERO ───────── -->
+<section class="hero">
+  <div class="hero-eyebrow">✨ Следующий уровень</div>
+  <h1>Попробуй трейдерский режим.<br><span>Торгуй как профи.</span></h1>
+  <p class="hero-sub">
+    Ты уже совершаешь несколько сделок в неделю. Трейдерский режим убирает последний барьер — стакан, график и заявка на одном экране.
+  </p>
+  <button class="hero-cta" data-track="hero-cta">✨ Попробовать трейдерский режим</button>
+  <p class="hero-cta-note">Бесплатно · Отключить в любой момент</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- ───────── PROBLEM ───────── -->
+<section class="problem-section">
+  <div class="problem-inner">
+    <div class="section-label">Почему это для тебя</div>
+    <h2 class="section-title">Ты уже торгуешь активно — один шаг до следующего уровня</h2>
+    <p class="section-sub">Признаёшь прогресс. Хочешь шага вперёд. Трейдерский режим — это тот самый инструмент.</p>
+
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-icon">📊</div>
+        <h3>Смотришь стакан — теряешь график</h3>
+        <p>Чтобы проверить глубину рынка, нужно уйти с экрана графика. Пока переключаешься — цена уже поменялась.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">📈</div>
+        <h3>Анализируешь график — стакан устарел</h3>
+        <p>Возвращаешься к стакану после графика — объёмы и лучшие цены уже другие. Решение принято на устаревших данных.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ───────── FEATURE 1: MAIN TRADER SCREEN ───────── -->
+<div class="feature-rows">
+<div style="background: linear-gradient(180deg, transparent, rgba(239,49,36,0.03), transparent)">
+<div class="feature-row">
+  <div class="phone-frame">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 230 460" font-family="-apple-system,Helvetica Neue,Arial,sans-serif">
+  <defs>
+    <!-- Phone body gradient -->
+    <linearGradient id="m1-phoneBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1E1E2A"/>
+      <stop offset="100%" stop-color="#111118"/>
+    </linearGradient>
+    <!-- Depth bars for asks (red) -->
+    <linearGradient id="m1-askDepth" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#EF3124" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#EF3124" stop-opacity="0.08"/>
+    </linearGradient>
+    <!-- Depth bars for bids (green) -->
+    <linearGradient id="m1-bidDepth" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#17C964" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#17C964" stop-opacity="0.08"/>
+    </linearGradient>
+    <clipPath id="m1-phoneClip">
+      <rect x="4" y="6" width="222" height="448" rx="28" ry="28"/>
+    </clipPath>
+    <clipPath id="m1-chartClip">
+      <rect x="4" y="86" width="222" height="86"/>
+    </clipPath>
+    <clipPath id="m1-splitClip">
+      <rect x="4" y="172" width="222" height="281"/>
+    </clipPath>
+  </defs>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- PHONE FRAME -->
+  <!-- ═══════════════════════════════════════ -->
+  <!-- Shadow -->
+  <rect x="8" y="12" width="222" height="448" rx="30" ry="30" fill="rgba(0,0,0,0.5)" filter="blur(8px)"/>
+  <!-- Body -->
+  <rect x="4" y="6" width="222" height="448" rx="28" ry="28" fill="url(#m1-phoneBg)" stroke="#2A2A38" stroke-width="1.5"/>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- STATUS BAR (y=6–30) -->
+  <!-- ═══════════════════════════════════════ -->
+  <rect x="4" y="6" width="222" height="38" rx="28" ry="28" fill="#111118" clip-path="url(#m1-phoneClip)"/>
+  <!-- Notch pill -->
+  <rect x="82" y="8" width="66" height="14" rx="7" fill="#0A0A0F"/>
+  <!-- Time -->
+  <text x="18" y="22" font-size="8" font-weight="600" fill="#FFFFFF">9:41</text>
+  <!-- Status icons -->
+  <text x="168" y="22" font-size="7" fill="rgba(255,255,255,0.7)">●●●</text>
+  <text x="183" y="22" font-size="7" fill="rgba(255,255,255,0.7)">◆</text>
+  <text x="196" y="22" font-size="7" fill="rgba(255,255,255,0.7)">▮▮▮</text>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- APP HEADER (y=30–86) -->
+  <!-- ═══════════════════════════════════════ -->
+  <rect x="4" y="30" width="222" height="56" fill="#161620" clip-path="url(#m1-phoneClip)"/>
+  <!-- Bottom border -->
+  <line x1="4" y1="85.5" x2="226" y2="85.5" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+
+  <!-- Back arrow -->
+  <text x="13" y="55" font-size="10" fill="rgba(255,255,255,0.55)">‹</text>
+
+  <!-- Ticker SBER -->
+  <text x="30" y="50" font-size="11" font-weight="700" fill="#FFFFFF">SBER</text>
+
+  <!-- Badge ⚡РЕЖИМ -->
+  <rect x="64" y="40" width="52" height="16" rx="8" fill="rgba(239,49,36,0.18)" stroke="rgba(239,49,36,0.4)" stroke-width="0.75"/>
+  <text x="68" y="51" font-size="7.5" font-weight="700" fill="#EF3124">⚡РЕЖИМ</text>
+
+  <!-- Price -->
+  <text x="126" y="50" font-size="10.5" font-weight="700" fill="#FFFFFF">319,55</text>
+  <!-- Change -->
+  <text x="168" y="50" font-size="9" font-weight="600" fill="#EF3124">−0,14%</text>
+
+  <!-- Sub: bid/ask mini row -->
+  <text x="30" y="68" font-size="7.5" fill="#17C964">319,54</text>
+  <text x="60" y="68" font-size="7.5" fill="rgba(255,255,255,0.3)">bid</text>
+  <text x="150" y="68" font-size="7.5" fill="#EF3124">319,55</text>
+  <text x="174" y="68" font-size="7.5" fill="rgba(255,255,255,0.3)">ask</text>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- CHART AREA (y=86–172) -->
+  <!-- ═══════════════════════════════════════ -->
+  <rect x="4" y="86" width="222" height="86" fill="#111118" clip-path="url(#m1-phoneClip)"/>
+
+  <!-- Grid lines -->
+  <line x1="4" y1="105" x2="226" y2="105" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+  <line x1="4" y1="120" x2="226" y2="120" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+  <line x1="4" y1="135" x2="226" y2="135" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+  <line x1="4" y1="150" x2="226" y2="150" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+  <line x1="4" y1="165" x2="226" y2="165" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+
+  <!-- Candles — общий нисходящий тренд -->
+  <!-- Green candles -->
+  <!-- x=11 green -->
+  <line x1="13" y1="112" x2="13" y2="130" stroke="#17C964" stroke-width="0.75"/>
+  <rect x="11" y="115" width="4" height="11" fill="#17C964"/>
+  <!-- x=23 green -->
+  <line x1="25" y1="110" x2="25" y2="128" stroke="#17C964" stroke-width="0.75"/>
+  <rect x="23" y="113" width="4" height="10" fill="#17C964"/>
+  <!-- x=35 red -->
+  <line x1="37" y1="114" x2="37" y2="133" stroke="#EF3124" stroke-width="0.75"/>
+  <rect x="35" y="116" width="4" height="12" fill="#EF3124"/>
+  <!-- x=47 red -->
+  <line x1="49" y1="116" x2="49" y2="135" stroke="#EF3124" stroke-width="0.75"/>
+  <rect x="47" y="118" width="4" height="11" fill="#EF3124"/>
+  <!-- x=59 green -->
+  <line x1="61" y1="117" x2="61" y2="131" stroke="#17C964" stroke-width="0.75"/>
+  <rect x="59" y="119" width="4" height="9" fill="#17C964"/>
+  <!-- x=71 green -->
+  <line x1="73" y1="116" x2="73" y2="130" stroke="#17C964" stroke-width="0.75"/>
+  <rect x="71" y="118" width="4" height="8" fill="#17C964"/>
+  <!-- x=83 red -->
+  <line x1="85" y1="119" x2="85" y2="137" stroke="#EF3124" stroke-width="0.75"/>
+  <rect x="83" y="121" width="4" height="12" fill="#EF3124"/>
+  <!-- x=95 red -->
+  <line x1="97" y1="121" x2="97" y2="138" stroke="#EF3124" stroke-width="0.75"/>
+  <rect x="95" y="123" width="4" height="10" fill="#EF3124"/>
+  <!-- x=107 red -->
+  <line x1="109" y1="123" x2="109" y2="140" stroke="#EF3124" stroke-width="0.75"/>
+  <rect x="107" y="125" width="4" height="10" fill="#EF3124"/>
+  <!-- x=119 green -->
+  <line x1="121" y1="122" x2="121" y2="136" stroke="#17C964" stroke-width="0.75"/>
+  <rect x="119" y="124" width="4" height="8" fill="#17C964"/>
+  <!-- x=131 red -->
+  <line x1="133" y1="125" x2="133" y2="142" stroke="#EF3124" stroke-width="0.75"/>
+  <rect x="131" y="127" width="4" height="11" fill="#EF3124"/>
+  <!-- x=143 green -->
+  <line x1="145" y1="124" x2="145" y2="138" stroke="#17C964" stroke-width="0.75"/>
+  <rect x="143" y="126" width="4" height="8" fill="#17C964"/>
+  <!-- x=155 red -->
+  <line x1="157" y1="127" x2="157" y2="144" stroke="#EF3124" stroke-width="0.75"/>
+  <rect x="155" y="129" width="4" height="11" fill="#EF3124"/>
+  <!-- x=167 red -->
+  <line x1="169" y1="129" x2="169" y2="146" stroke="#EF3124" stroke-width="0.75"/>
+  <rect x="167" y="131" width="4" height="11" fill="#EF3124"/>
+  <!-- x=179 red -->
+  <line x1="181" y1="130" x2="181" y2="148" stroke="#EF3124" stroke-width="0.75"/>
+  <rect x="179" y="132" width="4" height="12" fill="#EF3124"/>
+  <!-- x=191 red -->
+  <line x1="193" y1="133" x2="193" y2="150" stroke="#EF3124" stroke-width="0.75"/>
+  <rect x="191" y="135" width="4" height="11" fill="#EF3124"/>
+  <!-- x=203 red -->
+  <line x1="205" y1="135" x2="205" y2="152" stroke="#EF3124" stroke-width="0.75"/>
+  <rect x="203" y="137" width="4" height="11" fill="#EF3124"/>
+  <!-- x=215 red (last, biggest drop) -->
+  <line x1="217" y1="136" x2="217" y2="155" stroke="#EF3124" stroke-width="0.75"/>
+  <rect x="215" y="138" width="4" height="13" fill="#EF3124"/>
+
+  <!-- Timeframe tabs -->
+  <text x="8" y="170" font-size="7" fill="rgba(255,255,255,0.35)">1М</text>
+  <text x="24" y="170" font-size="7" fill="rgba(255,255,255,0.35)">5М</text>
+  <!-- Active tab 1Ч -->
+  <rect x="36" y="161" width="14" height="10" rx="3" fill="rgba(239,49,36,0.2)"/>
+  <text x="38" y="170" font-size="7" font-weight="700" fill="#EF3124">1Ч</text>
+  <text x="55" y="170" font-size="7" fill="rgba(255,255,255,0.35)">1Д</text>
+
+  <!-- Bottom border chart -->
+  <line x1="4" y1="172" x2="226" y2="172" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SPLIT SCREEN (y=172–453) -->
+  <!-- ═══════════════════════════════════════ -->
+
+  <!-- Left bg (form) -->
+  <rect x="4" y="172" width="111" height="281" fill="#161620" clip-path="url(#m1-phoneClip)"/>
+  <!-- Right bg (orderbook) -->
+  <rect x="115" y="172" width="111" height="281" fill="#111118" clip-path="url(#m1-phoneClip)"/>
+
+  <!-- Vertical divider -->
+  <line x1="114" y1="172" x2="114" y2="453" stroke="rgba(255,255,255,0.1)" stroke-width="0.75"/>
+
+  <!-- ─────────────────────────────── -->
+  <!-- LEFT: ORDER FORM -->
+  <!-- ─────────────────────────────── -->
+
+  <!-- Toggle Купить / Продать (y=174–196) -->
+  <rect x="6" y="174" width="106" height="20" rx="6" fill="#1E1E2A"/>
+  <!-- Active: Купить -->
+  <rect x="7" y="175" width="52" height="18" rx="5" fill="#17C964"/>
+  <text x="33" y="187" font-size="8" font-weight="700" fill="#000000" text-anchor="middle">Купить</text>
+  <!-- Inactive: Продать -->
+  <text x="84" y="187" font-size="8" fill="rgba(255,255,255,0.45)" text-anchor="middle">Продать</text>
+
+  <!-- Тип заявки (y=200–214) -->
+  <rect x="6" y="200" width="106" height="16" rx="5" fill="#1A1A26" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+  <text x="12" y="211" font-size="7.5" fill="#FFFFFF">Лимит</text>
+  <text x="102" y="211" font-size="8" fill="rgba(255,255,255,0.45)" text-anchor="end">▾</text>
+
+  <!-- Label Цена (y=218–224) -->
+  <text x="6" y="224" font-size="7" fill="rgba(255,255,255,0.4)">Цена, ₽</text>
+  <!-- Поле цены (y=226–240) -->
+  <rect x="6" y="226" width="106" height="16" rx="5" fill="#1A1A26" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+  <text x="12" y="237" font-size="8" font-weight="600" fill="#FFFFFF">319,54</text>
+  <text x="108" y="237" font-size="7" fill="rgba(255,255,255,0.3)" text-anchor="end">₽</text>
+
+  <!-- Label Кол-во (y=244–250) -->
+  <text x="6" y="250" font-size="7" fill="rgba(255,255,255,0.4)">Лоты</text>
+  <!-- Поле лотов (y=252–266) -->
+  <rect x="6" y="252" width="106" height="16" rx="5" fill="#1A1A26" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+  <text x="12" y="263" font-size="8" font-weight="600" fill="#FFFFFF">1 лот</text>
+  <!-- +/- -->
+  <text x="96" y="263" font-size="9" fill="rgba(255,255,255,0.4)">+</text>
+  <line x1="88" y1="257" x2="92" y2="257" stroke="rgba(255,255,255,0.4)" stroke-width="1.2"/>
+
+  <!-- Слайдер (y=270–276) -->
+  <rect x="6" y="272" width="106" height="4" rx="2" fill="#2A2A38"/>
+  <rect x="6" y="272" width="27" height="4" rx="2" fill="#17C964"/>
+  <!-- Thumb -->
+  <circle cx="33" cy="274" r="4" fill="#FFFFFF" stroke="#17C964" stroke-width="1.2"/>
+  <!-- Labels -->
+  <text x="6" y="284" font-size="6" fill="rgba(255,255,255,0.3)">0%</text>
+  <text x="26" y="284" font-size="6" fill="#17C964">25%</text>
+  <text x="60" y="284" font-size="6" fill="rgba(255,255,255,0.3)">50%</text>
+  <text x="100" y="284" font-size="6" fill="rgba(255,255,255,0.3)" text-anchor="end">100%</text>
+
+  <!-- Итого (y=289–296) -->
+  <text x="6" y="296" font-size="7" fill="rgba(255,255,255,0.4)">Итого</text>
+  <text x="110" y="296" font-size="7.5" font-weight="600" fill="#FFFFFF" text-anchor="end">319,54 ₽</text>
+
+  <!-- Кнопка КУПИТЬ (y=300–322) -->
+  <rect x="6" y="300" width="106" height="22" rx="7" fill="#17C964"/>
+  <text x="59" y="315" font-size="8.5" font-weight="700" fill="#000000" text-anchor="middle">КУПИТЬ SBER</text>
+
+  <!-- Доступно -->
+  <text x="6" y="335" font-size="6.5" fill="rgba(255,255,255,0.3)">На счёте: 963 ₽</text>
+
+  <!-- ─────────────────────────────── -->
+  <!-- RIGHT: ORDERBOOK -->
+  <!-- ─────────────────────────────── -->
+
+  <!-- Header: Стакан label -->
+  <text x="170" y="185" font-size="7" fill="rgba(255,255,255,0.4)" text-anchor="middle">стакан</text>
+
+  <!-- Column headers -->
+  <text x="120" y="195" font-size="6.5" fill="rgba(255,255,255,0.25)">Цена</text>
+  <text x="225" y="195" font-size="6.5" fill="rgba(255,255,255,0.25)" text-anchor="end">Объём</text>
+
+  <!-- ASK rows (y=198–288, 5 rows × 18px) -->
+  <!-- Ask depth bars (proportional to volume, max width ~28px from right edge x=225) -->
+  <!-- Row 1: 319,60 | 3 257 -->
+  <rect x="197" y="199" width="28" height="16" rx="1" fill="rgba(239,49,36,0.15)"/>
+  <text x="120" y="211" font-size="7.5" fill="#EF3124">319,60</text>
+  <text x="225" y="211" font-size="7.5" fill="#EF3124" text-anchor="end">3 257</text>
+  <!-- Row 2: 319,59 | 2 665 -->
+  <rect x="202" y="217" width="23" height="16" rx="1" fill="rgba(239,49,36,0.15)"/>
+  <text x="120" y="229" font-size="7.5" fill="#EF3124">319,59</text>
+  <text x="225" y="229" font-size="7.5" fill="#EF3124" text-anchor="end">2 665</text>
+  <!-- Row 3: 319,58 | 618 -->
+  <rect x="220" y="235" width="5" height="16" rx="1" fill="rgba(239,49,36,0.15)"/>
+  <text x="120" y="247" font-size="7.5" fill="#EF3124">319,58</text>
+  <text x="225" y="247" font-size="7.5" fill="#EF3124" text-anchor="end">618</text>
+  <!-- Row 4: 319,57 | 4 020 -->
+  <rect x="191" y="253" width="34" height="16" rx="1" fill="rgba(239,49,36,0.15)"/>
+  <!-- Clamp depth bar to right half -->
+  <text x="120" y="265" font-size="7.5" fill="#EF3124">319,57</text>
+  <text x="225" y="265" font-size="7.5" fill="#EF3124" text-anchor="end">4 020</text>
+  <!-- Row 5: 319,56 | 1 250 -->
+  <rect x="214" y="271" width="11" height="16" rx="1" fill="rgba(239,49,36,0.15)"/>
+  <text x="120" y="283" font-size="7.5" fill="#EF3124">319,56</text>
+  <text x="225" y="283" font-size="7.5" fill="#EF3124" text-anchor="end">1 250</text>
+
+  <!-- SPREAD DIVIDER (y=289–308) -->
+  <rect x="116" y="290" width="112" height="1" fill="rgba(255,255,255,0.12)"/>
+  <!-- Current price pill -->
+  <rect x="134" y="292" width="72" height="14" rx="7" fill="rgba(239,49,36,0.22)" stroke="rgba(239,49,36,0.5)" stroke-width="0.75"/>
+  <text x="170" y="302" font-size="7.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">● 319,55</text>
+
+  <!-- BID rows (y=308–398, 5 rows × 18px) -->
+  <!-- Row 1: 319,54 | 3 954 -->
+  <rect x="197" y="309" width="28" height="16" rx="1" fill="rgba(23,201,100,0.15)"/>
+  <text x="120" y="321" font-size="7.5" fill="#17C964">319,54</text>
+  <text x="225" y="321" font-size="7.5" fill="#17C964" text-anchor="end">3 954</text>
+  <!-- Row 2: 319,53 | 303 -->
+  <rect x="222" y="327" width="3" height="16" rx="1" fill="rgba(23,201,100,0.15)"/>
+  <text x="120" y="339" font-size="7.5" fill="#17C964">319,53</text>
+  <text x="225" y="339" font-size="7.5" fill="#17C964" text-anchor="end">303</text>
+  <!-- Row 3: 319,52 | 10 005 -->
+  <rect x="184" y="345" width="41" height="16" rx="1" fill="rgba(23,201,100,0.2)"/>
+  <text x="120" y="357" font-size="7.5" fill="#17C964">319,52</text>
+  <text x="225" y="357" font-size="7.5" fill="#17C964" text-anchor="end">10 005</text>
+  <!-- Row 4: 319,51 | 1 158 -->
+  <rect x="215" y="363" width="10" height="16" rx="1" fill="rgba(23,201,100,0.15)"/>
+  <text x="120" y="375" font-size="7.5" fill="#17C964">319,51</text>
+  <text x="225" y="375" font-size="7.5" fill="#17C964" text-anchor="end">1 158</text>
+  <!-- Row 5: 319,50 | 1 200 -->
+  <rect x="215" y="381" width="10" height="16" rx="1" fill="rgba(23,201,100,0.15)"/>
+  <text x="120" y="393" font-size="7.5" fill="#17C964">319,50</text>
+  <text x="225" y="393" font-size="7.5" fill="#17C964" text-anchor="end">1 200</text>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- BOTTOM SAFE AREA + HOME BAR -->
+  <!-- ═══════════════════════════════════════ -->
+  <rect x="4" y="440" width="222" height="14" fill="#111118" clip-path="url(#m1-phoneClip)"/>
+  <!-- Home bar -->
+  <rect x="85" y="450" width="60" height="4" rx="2" fill="rgba(255,255,255,0.2)"/>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- PHONE FRAME BORDER (top layer) -->
+  <!-- ═══════════════════════════════════════ -->
+  <rect x="4" y="6" width="222" height="448" rx="28" ry="28" fill="none" stroke="#2A2A38" stroke-width="1.5"/>
+  <!-- Inner highlight -->
+  <rect x="5" y="7" width="220" height="446" rx="27" ry="27" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+</svg>
+
+  </div>
+  <div class="feature-text">
+    <div class="section-label">Главный экран</div>
+    <h2>Всё, что нужно для следующей сделки — уже на одном экране</h2>
+    <p>Стакан котировок, график движения цены и форма заявки — всё одновременно. Видишь рынок целиком и действуешь сразу.</p>
+    <div class="feature-chips">
+      <span class="chip red">Стакан в реальном времени</span>
+      <span class="chip red">Свечной график</span>
+      <span class="chip red">Лимит и рынок</span>
+      <span class="chip">Объём слайдером</span>
+      <span class="chip">Ценовые уровни</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ───────── FEATURE 2: ORDER (Mockup 2 — реальный скрин заявки) ───────── -->
+<div style="background: rgba(23,201,100,0.015)">
+<div class="feature-row reverse">
+  <div class="phone-frame">
+    <img src="assets/screen-zajavka.jpg" alt="Форма заявки — текущий вид Альфа-Инвестиции">
+  </div>
+  <div class="feature-text">
+    <div class="section-label">Выставление заявки</div>
+    <h2>Лимит, рынок и стоп — без лишних шагов</h2>
+    <p>Все типы заявок в одном интерфейсе. Быстрый выбор объёма процентами от портфеля, встроенный стоп-лосс и расчёт суммы в реальном времени — чтобы не считать в уме.</p>
+    <div class="feature-chips">
+      <span class="chip red">Лимит / Рынок / Стоп</span>
+      <span class="chip red">Встроенный стоп-лосс</span>
+      <span class="chip">Быстрый объём (%)</span>
+      <span class="chip">Сумма в реальном времени</span>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ───────── BEFORE / AFTER ───────── -->
+<section class="compare-section">
+  <div class="compare-inner">
+    <div class="section-label">До и после</div>
+    <h2 class="section-title">Разница — с первой сделки</h2>
+    <p class="section-sub">Стандартный режим требует нескольких шагов на каждую заявку. Трейдерский — одно действие.</p>
+
+    <div class="compare-wrapper">
+      <div class="compare-col">
+        <span class="compare-label">❌ &nbsp; Сейчас</span>
+        <div class="phone-frame" style="width:190px">
+          <img src="assets/screen-obzor.jpg"
+               style="width:190px; max-height:390px; object-fit:cover; object-position:top; border-radius:28px; display:block;"
+               alt="Текущий вид — 5 вкладок для переключения">
+        </div>
+      </div>
+
+      <div class="compare-arrow">→</div>
+
+      <div class="compare-col after">
+        <span class="compare-label">✅ &nbsp; Трейдерский режим</span>
+        <div class="phone-frame" style="width:190px">
+          <svg viewBox="0 0 230 460" xmlns="http://www.w3.org/2000/svg">
+            <rect width="230" height="460" rx="30" fill="#111118" stroke="rgba(239,49,36,0.4)" stroke-width="2"/>
+            <rect x="75" y="8" width="80" height="18" rx="9" fill="#0A0A0F"/>
+            <rect x="88" y="11" width="54" height="12" rx="6" fill="#1A1A26"/>
+            <text x="18" y="35" font-family="-apple-system,sans-serif" font-size="9" fill="rgba(255,255,255,0.6)" font-weight="600">9:41</text>
+            <rect x="0" y="44" width="230" height="36" fill="#EF3124"/>
+            <text x="16" y="67" font-family="-apple-system,sans-serif" font-size="11" fill="rgba(255,255,255,0.8)" font-weight="600">⚡ ТРЕЙДЕРСКИЙ РЕЖИМ</text>
+            <text x="210" y="67" font-family="-apple-system,sans-serif" font-size="10" fill="rgba(255,255,255,0.7)" text-anchor="end">319,55</text>
+            <rect x="0" y="80" width="230" height="70" fill="#0D0D15"/>
+            <line x1="14" y1="134" x2="14" y2="126" stroke="#17C964" stroke-width="1"/>
+            <rect x="11" y="126" width="6" height="8" fill="#17C964"/>
+            <line x1="38" y1="132" x2="38" y2="120" stroke="#EF3124" stroke-width="1"/>
+            <rect x="35" y="122" width="6" height="10" fill="#EF3124"/>
+            <line x1="62" y1="128" x2="62" y2="116" stroke="#EF3124" stroke-width="1"/>
+            <rect x="59" y="118" width="6" height="10" fill="#EF3124"/>
+            <line x1="86" y1="122" x2="86" y2="110" stroke="#17C964" stroke-width="1"/>
+            <rect x="83" y="112" width="6" height="10" fill="#17C964"/>
+            <line x1="110" y1="116" x2="110" y2="104" stroke="#EF3124" stroke-width="1"/>
+            <rect x="107" y="106" width="6" height="10" fill="#EF3124"/>
+            <line x1="134" y1="112" x2="134" y2="100" stroke="#EF3124" stroke-width="1"/>
+            <rect x="131" y="102" width="6" height="10" fill="#EF3124"/>
+            <line x1="158" y1="106" x2="158" y2="95" stroke="#EF3124" stroke-width="1"/>
+            <rect x="155" y="97" width="6" height="9" fill="#EF3124"/>
+            <line x1="182" y1="100" x2="182" y2="90" stroke="#EF3124" stroke-width="1"/>
+            <rect x="179" y="92" width="6" height="8" fill="#EF3124"/>
+            <line x1="206" y1="96" x2="206" y2="88" stroke="#EF3124" stroke-width="1"/>
+            <rect x="203" y="89" width="6" height="7" fill="#EF3124"/>
+            <text x="16" y="93" font-family="-apple-system,sans-serif" font-size="7" fill="rgba(239,49,36,0.8)" font-weight="600">1М · 5М · 1Ч · 1Д</text>
+            <rect x="0" y="150" width="230" height="10" fill="#161620"/>
+            <text x="10" y="158" font-family="-apple-system,sans-serif" font-size="7" fill="rgba(255,255,255,0.4)" font-weight="600">СТАКАН</text>
+            <rect x="0" y="160" width="130" height="10" fill="rgba(239,49,36,0.1)"/>
+            <text x="8" y="168" font-family="-apple-system,sans-serif" font-size="7.5" fill="rgba(239,49,36,0.8)">319,60</text>
+            <text x="192" y="168" font-family="-apple-system,sans-serif" font-size="7.5" fill="rgba(255,255,255,0.4)" text-anchor="end">3 257</text>
+            <rect x="0" y="170" width="85" height="10" fill="rgba(239,49,36,0.07)"/>
+            <text x="8" y="178" font-family="-apple-system,sans-serif" font-size="7.5" fill="rgba(239,49,36,0.8)">319,59</text>
+            <text x="192" y="178" font-family="-apple-system,sans-serif" font-size="7.5" fill="rgba(255,255,255,0.4)" text-anchor="end">2 665</text>
+            <rect x="0" y="180" width="230" height="10" fill="#0D0D15"/>
+            <text x="115" y="188" font-family="-apple-system,sans-serif" font-size="7" fill="rgba(255,255,255,0.3)" text-anchor="middle">● 319,55</text>
+            <rect x="0" y="190" width="70" height="10" fill="rgba(23,201,100,0.08)"/>
+            <text x="8" y="198" font-family="-apple-system,sans-serif" font-size="7.5" fill="rgba(23,201,100,0.8)">319,54</text>
+            <text x="192" y="198" font-family="-apple-system,sans-serif" font-size="7.5" fill="rgba(255,255,255,0.4)" text-anchor="end">3 954</text>
+            <rect x="0" y="200" width="110" height="10" fill="rgba(23,201,100,0.05)"/>
+            <text x="8" y="208" font-family="-apple-system,sans-serif" font-size="7.5" fill="rgba(23,201,100,0.8)">319,53</text>
+            <text x="192" y="208" font-family="-apple-system,sans-serif" font-size="7.5" fill="rgba(255,255,255,0.4)" text-anchor="end">303</text>
+            <rect x="0" y="210" width="230" height="200" fill="#161620"/>
+            <rect x="8" y="218" width="214" height="22" rx="9" fill="#111118"/>
+            <rect x="9" y="219" width="106" height="20" rx="8" fill="#EF3124"/>
+            <text x="62" y="233" font-family="-apple-system,sans-serif" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">Покупка</text>
+            <text x="169" y="233" font-family="-apple-system,sans-serif" font-size="10" fill="rgba(255,255,255,0.35)" text-anchor="middle">Продажа</text>
+            <rect x="8" y="247" width="100" height="16" rx="6" fill="#1E1E2A" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+            <text x="14" y="259" font-family="-apple-system,sans-serif" font-size="8" fill="rgba(255,255,255,0.5)">Рыночная ▾</text>
+            <rect x="114" y="247" width="108" height="16" rx="6" fill="#1E1E2A" stroke="rgba(239,49,36,0.4)" stroke-width="1"/>
+            <text x="120" y="259" font-family="-apple-system,sans-serif" font-size="11" fill="#FFFFFF" font-weight="600">1</text>
+            <rect x="8" y="270" width="214" height="3" rx="2" fill="rgba(255,255,255,0.08)"/>
+            <rect x="8" y="270" width="53" height="3" rx="2" fill="#EF3124"/>
+            <circle cx="61" cy="271" r="5" fill="#EF3124" stroke="#161620" stroke-width="1.5"/>
+            <text x="8" y="285" font-family="-apple-system,sans-serif" font-size="8" fill="rgba(255,255,255,0.3)">Итого: <tspan fill="rgba(255,255,255,0.7)" font-weight="700">319,55 ₽</tspan></text>
+            <rect x="8" y="291" width="214" height="26" rx="8" fill="#17C964"/>
+            <text x="115" y="308" font-family="-apple-system,sans-serif" font-size="11" fill="#000" font-weight="800" text-anchor="middle">Купить SBER</text>
+            <text x="115" y="332" font-family="-apple-system,sans-serif" font-size="10" fill="rgba(23,201,100,0.7)" text-anchor="middle">✓ 1 действие</text>
+            <rect x="85" y="454" width="60" height="4" rx="2" fill="rgba(255,255,255,0.2)"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="metrics-row">
+      <div class="metric-card">
+        <div class="label">Шагов для заявки</div>
+        <div class="metric-pair">
+          <span class="from">3</span>
+          <span class="arrow">→</span>
+          <span class="to">1</span>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="label">Время выставления заявки</div>
+        <div class="metric-pair">
+          <span class="from">~45с</span>
+          <span class="arrow">→</span>
+          <span class="to">~10с</span>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="label">Потеря контекста рынка</div>
+        <div class="metric-pair">
+          <span class="from">Да</span>
+          <span class="arrow">→</span>
+          <span class="to">Нет</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ───────── FEATURE 4: MODE SWITCH ───────── -->
+<div class="feature-row" style="max-width:1100px; margin:0 auto;">
+  <div class="phone-frame">
+    <svg viewBox="0 0 230 460" xmlns="http://www.w3.org/2000/svg">
+      <rect width="230" height="460" rx="30" fill="#111118" stroke="#2A2A38" stroke-width="1.5"/>
+      <rect x="75" y="8" width="80" height="18" rx="9" fill="#0A0A0F"/>
+      <rect x="88" y="11" width="54" height="12" rx="6" fill="#1A1A26"/>
+      <text x="18" y="35" font-family="-apple-system,sans-serif" font-size="9" fill="rgba(255,255,255,0.6)" font-weight="600">9:41</text>
+      <rect x="0" y="44" width="230" height="44" fill="#161620"/>
+      <text x="115" y="72" font-family="-apple-system,sans-serif" font-size="13" fill="#FFFFFF" font-weight="700" text-anchor="middle">SBER · 319,55</text>
+      <rect x="12" y="100" width="206" height="120" rx="14" fill="#1A1A26" opacity="0.5"/>
+      <text x="22" y="122" font-family="-apple-system,sans-serif" font-size="11" fill="rgba(255,255,255,0.25)">Обычный режим</text>
+      <rect x="22" y="130" width="80" height="8" rx="4" fill="rgba(255,255,255,0.06)"/>
+      <rect x="22" y="144" width="120" height="8" rx="4" fill="rgba(255,255,255,0.04)"/>
+      <rect x="22" y="158" width="60" height="8" rx="4" fill="rgba(255,255,255,0.04)"/>
+      <rect x="22" y="172" width="100" height="8" rx="4" fill="rgba(255,255,255,0.04)"/>
+      <rect x="22" y="186" width="80" height="8" rx="4" fill="rgba(255,255,255,0.04)"/>
+      <rect x="0" y="230" width="230" height="230" fill="rgba(0,0,0,0.6)"/>
+      <rect x="0" y="248" width="230" height="212" rx="0" fill="#1A1A26"/>
+      <rect x="90" y="254" width="50" height="4" rx="2" fill="rgba(255,255,255,0.15)"/>
+      <text x="115" y="280" font-family="-apple-system,sans-serif" font-size="14" fill="#FFFFFF" font-weight="800" text-anchor="middle">Выберите режим</text>
+      <text x="115" y="296" font-family="-apple-system,sans-serif" font-size="10" fill="rgba(255,255,255,0.35)" text-anchor="middle">Настройте интерфейс под себя</text>
+      <rect x="16" y="308" width="198" height="54" rx="14" fill="#222230"/>
+      <rect x="28" y="320" width="30" height="30" rx="8" fill="#2A2A3A"/>
+      <text x="43" y="340" font-family="-apple-system,sans-serif" font-size="14" text-anchor="middle" fill="rgba(255,255,255,0.5)">📱</text>
+      <text x="68" y="326" font-family="-apple-system,sans-serif" font-size="12" fill="rgba(255,255,255,0.7)" font-weight="600">Стандартный</text>
+      <text x="68" y="341" font-family="-apple-system,sans-serif" font-size="9" fill="rgba(255,255,255,0.3)">График и информация об активе</text>
+      <circle cx="203" cy="335" r="8" fill="transparent" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+      <rect x="16" y="368" width="198" height="54" rx="14" fill="rgba(239,49,36,0.12)" stroke="rgba(239,49,36,0.5)" stroke-width="1.5"/>
+      <rect x="28" y="380" width="30" height="30" rx="8" fill="rgba(239,49,36,0.2)"/>
+      <text x="43" y="400" font-family="-apple-system,sans-serif" font-size="14" text-anchor="middle" fill="#EF3124">✨</text>
+      <text x="68" y="386" font-family="-apple-system,sans-serif" font-size="12" fill="#FFFFFF" font-weight="700">Трейдерский</text>
+      <text x="68" y="401" font-family="-apple-system,sans-serif" font-size="9" fill="rgba(255,255,255,0.4)">Стакан + График + Заявка</text>
+      <circle cx="203" cy="395" r="8" fill="#EF3124"/>
+      <circle cx="203" cy="395" r="4" fill="#FFFFFF"/>
+      <rect x="16" y="432" width="198" height="20" rx="10" fill="#EF3124"/>
+      <text x="115" y="446" font-family="-apple-system,sans-serif" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">Применить</text>
+      <rect x="85" y="455" width="60" height="4" rx="2" fill="rgba(255,255,255,0.2)"/>
+    </svg>
+  </div>
+  <div class="feature-text">
+    <div class="section-label">Включение</div>
+    <h2>Один клик — и ты в трейдерском режиме</h2>
+    <p>Режим включается прямо с экрана инструмента. Запоминается между сессиями. Можно выключить в любой момент — стандартный интерфейс никуда не денется.</p>
+    <div class="feature-chips">
+      <span class="chip red">Включение в один клик</span>
+      <span class="chip">Сохраняется между сессиями</span>
+      <span class="chip">Легко отключить</span>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ───────── FOR WHOM ───────── -->
+<section class="whom-section">
+  <div class="whom-inner">
+    <div class="section-label">Для кого</div>
+    <h2 class="section-title">Трейдерский режим создан для тебя, если...</h2>
+    <p class="section-sub">Режим для тех, кто уже торгует активно и хочет перейти на следующий уровень.</p>
+    <div class="whom-grid">
+      <div class="whom-card">
+        <div class="whom-icon">🔄</div>
+        <div>
+          <h4>Ты торгуешь активно</h4>
+          <p>Совершаешь несколько сделок в неделю и переключение между экранами уже раздражает.</p>
+        </div>
+      </div>
+      <div class="whom-card">
+        <div class="whom-icon">⚡</div>
+        <div>
+          <h4>Для тебя важна скорость</h4>
+          <p>На волатильном рынке каждая секунда на счету. Ты хочешь выставить заявку быстро и точно.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ───────── SOCIAL PROOF ───────── -->
+<section class="proof-section">
+  <div class="proof-inner">
+    <div class="section-label">Уже работает</div>
+    <h2 class="section-title">Такой интерфейс — стандарт<br>на профессиональных платформах</h2>
+    <div class="proof-grid">
+      <div class="proof-card">
+        <span>🔶</span>
+        <div class="proof-card-text">
+          <strong>OKX</strong>
+          <p>Единый трейдинговый экран со стаканом и графиком — один из главных аргументов при выборе платформы среди активных трейдеров.</p>
+        </div>
+      </div>
+      <div class="proof-card">
+        <span>🟡</span>
+        <div class="proof-card-text">
+          <strong>Bybit</strong>
+          <p>Профессиональный режим с полным набором инструментов на одном экране — стандарт для мобильного трейдинга.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ───────── CTA FINAL ───────── -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <h2>Попробуй трейдерский режим</h2>
+    <p>Ты уже готов к следующему шагу. Стакан, график и заявка на одном экране — инструмент, который ты хотел.</p>
+    <button class="cta-btn" data-track="final-cta">✨ Попробовать трейдерский режим</button>
+    <p class="cta-meta">Бесплатно · Отключить в любой момент · Только для Альфа-Инвестиции</p>
+    <p style="margin-top:16px; font-size:11px; color:rgba(255,255,255,0.25); max-width:400px; margin-left:auto; margin-right:auto; line-height:1.5;">
+      * Режим в разработке. Это предпросмотр — кнопка не активирует функцию.
+    </p>
+  </div>
+</section>
+
+<footer class="footer">
+  <span>© 2025 Альфа-Инвестиции</span>
+  <span>Следующий уровень</span>
+</footer>
+
+<script>
+function showSuccess() {
+  var overlay = document.getElementById('success-overlay');
+  overlay.style.display = 'flex';
+}
+function closeWebView() {
+  try {
+    if (window.AlfaInterface && window.AlfaInterface.closeWebView) {
+      window.AlfaInterface.closeWebView();
+    } else {
+      setTimeout(function() {
+        document.getElementById('bridge-fallback').style.display = 'block';
+      }, 2000);
+    }
+  } catch(e) {
+    setTimeout(function() {
+      document.getElementById('bridge-fallback').style.display = 'block';
+    }, 2000);
+  }
+}
+document.addEventListener('DOMContentLoaded', function() {
+  var ctaBtns = document.querySelectorAll('.hero-cta, .cta-btn');
+  ctaBtns.forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      showSuccess();
+    });
+  });
+});
+</script>
+
+</body>
+</html>
