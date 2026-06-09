@@ -302,6 +302,26 @@
     .cta-btn, .hero-cta { font-size: 14px; padding: 14px 20px; }
   }
 </style>
+
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+
+<!-- Яндекс.Метрика -->
+<script type="text/javascript">
+  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+  m[i].l=1*new Date();
+  for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+  k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+  (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+  ym(XXXXXXXX, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/XXXXXXXX" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 </head>
 <body>
 
@@ -1062,10 +1082,48 @@
   (function() {
     var variant = 'b';
 
+    /* ── State ── */
+    var _landingOpenedAt = Date.now();
+    var _successShownAt = 0;
+    var _ctaClicked = false;
+    var _currentScrollDepth = 0;
+    var _maxScrollDepth = 0;
+
+    /* ── Unified tracker: GA4 + YM ── */
+    function track(event, params) {
+      if (typeof gtag === 'function') {
+        gtag('event', event, params);
+      }
+      if (typeof ym === 'function') {
+        ym(XXXXXXXX, 'reachGoal', event, params);
+      }
+    }
+
+    /* ── Scroll depth throttle ── */
+    var _scrollThrottle;
+    window.addEventListener('scroll', function() {
+      clearTimeout(_scrollThrottle);
+      _scrollThrottle = setTimeout(function() {
+        _currentScrollDepth = Math.round(
+          (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight * 100
+        );
+        if (_currentScrollDepth > _maxScrollDepth) _maxScrollDepth = _currentScrollDepth;
+      }, 200);
+    }, { passive: true });
+
+    /* ── Landing opened ── */
+    document.addEventListener('DOMContentLoaded', function() {
+      _landingOpenedAt = Date.now();
+      track('trader_mode_landing_opened', { variant: variant });
+    });
+
+    /* ── Overlay ── */
     function showOverlay() {
       var overlay = document.getElementById('success-overlay');
       overlay.style.display = 'flex';
       sessionStorage.setItem('e006_cta_clicked', '1');
+      _successShownAt = Date.now();
+      track('trader_mode_success_shown', { variant: variant });
     }
 
     function closeWebView() {
@@ -1079,30 +1137,69 @@
     }
     window.closeWebView = closeWebView;
 
-    document.querySelectorAll('[data-track="hero-cta"], [data-track="final-cta"]').forEach(function(btn) {
-      btn.addEventListener('click', showOverlay);
+    /* ── success-close ── */
+    document.addEventListener('DOMContentLoaded', function() {
+      var successCloseBtn = document.querySelector('[data-track="success-close"]');
+      if (successCloseBtn) {
+        successCloseBtn.addEventListener('click', function() {
+          track('trader_mode_success_closed', {
+            variant: variant,
+            time_in_success_sec: Math.round((Date.now() - _successShownAt) / 1000)
+          });
+          _ctaClicked = true;
+        });
+      }
     });
 
-    /* Re-open same session — dim CTA */
+    /* ── CTA clicks ── */
+    document.querySelectorAll('[data-track="hero-cta"], [data-track="final-cta"]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var ctaType = btn.getAttribute('data-track').replace('-cta', '');
+        track('trader_mode_cta_clicked', {
+          variant: variant,
+          cta_type: ctaType,
+          time_to_click_sec: Math.round((Date.now() - _landingOpenedAt) / 1000),
+          scroll_depth_pct_at_click: _currentScrollDepth
+        });
+        showOverlay();
+      });
+    });
+
+    /* ── Re-open same session — dim CTA ── */
     if (sessionStorage.getItem('e006_cta_clicked') === '1') {
       document.querySelectorAll('[data-track="hero-cta"], [data-track="final-cta"]').forEach(function(btn) {
         btn.style.opacity = '0.7';
       });
     }
 
-    /* Scroll tracking */
-    var sections = ['section-mockup-1', 'section-mockup-2', 'section-mockup-3', 'section-cta-final'];
+    /* ── Section scroll tracking ── */
     var reported = {};
     document.addEventListener('scroll', function() {
       document.querySelectorAll('[data-track]').forEach(function(el) {
-        var track = el.getAttribute('data-track');
-        if (reported[track]) return;
+        var track_id = el.getAttribute('data-track');
+        if (reported[track_id]) return;
         var rect = el.getBoundingClientRect();
         if (rect.top < window.innerHeight * 0.75) {
-          reported[track] = true;
+          reported[track_id] = true;
+          track('trader_mode_section_scrolled', {
+            variant: variant,
+            section_name: track_id,
+            scroll_depth_pct: _currentScrollDepth
+          });
         }
       });
     }, { passive: true });
+
+    /* ── Landing closed without CTA ── */
+    document.addEventListener('visibilitychange', function() {
+      if (document.visibilityState === 'hidden' && !_ctaClicked) {
+        track('trader_mode_landing_closed', {
+          variant: variant,
+          time_spent_sec: Math.round((Date.now() - _landingOpenedAt) / 1000),
+          max_scroll_depth_pct: _maxScrollDepth
+        });
+      }
+    });
   })();
 </script>
 </body>
