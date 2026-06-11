@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="ru">
 
@@ -201,8 +201,131 @@
 
 </footer>
 
-<script>  (function() {    var variant = 'd';    /* ── State ── */    var _landingOpenedAt = Date.now();    var _successShownAt = 0;    var _ctaClicked = false;    var _currentScrollDepth = 0;    var _maxScrollDepth = 0;    /* ── Unified tracker: GA4 + YM ── */    function track(event, params) {      if (typeof gtag === 'function') {        gtag('event', event, params);      }      if (typeof ym === 'function') {        ym(96171108, 'reachGoal', event, params);      }    }    /* ── Scroll depth throttle ── */    var _scrollThrottle;    window.addEventListener('scroll', function() {      clearTimeout(_scrollThrottle);      _scrollThrottle = setTimeout(function() {        _currentScrollDepth = Math.round(          (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight * 100        );        if (_currentScrollDepth > _maxScrollDepth) _maxScrollDepth = _currentScrollDepth;      }, 200);    }, { passive: true });    /* ── Landing opened ── */    document.addEventListener('DOMContentLoaded', function() {      _landingOpenedAt = Date.now();      track('trader_mode_landing_opened', { variant: variant });    });    /* ── Overlay ── */    function showSuccess() {      var overlay = document.getElementById('success-overlay');      overlay.style.display = 'flex';      _successShownAt = Date.now();      track('trader_mode_success_shown', { variant: variant });    }    function closeWebView() {      try {        if (window.AlfaInterface && window.AlfaInterface.closeWebView) {          window.AlfaInterface.closeWebView();        } else {          setTimeout(function() {            document.getElementById('bridge-fallback').style.display = 'block';          }, 2000);        }      } catch(e) {        setTimeout(function() {          document.getElementById('bridge-fallback').style.display = 'block';        }, 2000);      }    }    window.closeWebView = closeWebView;    window.showSuccess = showSuccess;    /* ── DOMContentLoaded: CTA + success-close ── */    document.addEventListener('DOMContentLoaded', function() {      /* CTA clicks */      var ctaBtns = document.querySelectorAll('[data-track="hero-cta"], [data-track="final-cta"]');      ctaBtns.forEach(function(btn) {        btn.addEventListener('click', function(e) {          e.preventDefault();          var ctaType = btn.getAttribute('data-track').replace('-cta', '');          track('trader_mode_cta_clicked', {            variant: variant,            cta_type: ctaType,            time_to_click_sec: Math.round((Date.now() - _landingOpenedAt) / 1000),            scroll_depth_pct_at_click: _currentScrollDepth          });          showSuccess();        });      });      /* success-close */      var successCloseBtn = document.querySelector('[data-track="success-close"]');      if (successCloseBtn) {        successCloseBtn.addEventListener('click', function() {          track('trader_mode_success_closed', {            variant: variant,            time_in_success_sec: Math.round((Date.now() - _successShownAt) / 1000)          });          _ctaClicked = true;        });      }    });    /* ── Section scroll tracking ── */    var reported = {};    document.addEventListener('scroll', function() {      document.querySelectorAll('[data-track]').forEach(function(el) {        var track_id = el.getAttribute('data-track');        if (reported[track_id]) return;        var rect = el.getBoundingClientRect();        if (rect.top 
-< window.innerHeight * 0.75) {          reported[track_id] = true;          track('trader_mode_section_scrolled', {            variant: variant,            section_name: track_id,            scroll_depth_pct: _currentScrollDepth          });        }      });    }, { passive: true });    /* ── Landing closed without CTA ── */    document.addEventListener('visibilitychange', function() {      if (document.visibilityState === 'hidden' && !_ctaClicked) {        track('trader_mode_landing_closed', {          variant: variant,          time_spent_sec: Math.round((Date.now() - _landingOpenedAt) / 1000),          max_scroll_depth_pct: _maxScrollDepth        });      }    });  })();</script>
+<script>
+  (function() {
+    var variant = 'd';
+
+    /* ── State ── */
+    var _landingOpenedAt = Date.now();
+    var _successShownAt = 0;
+    var _ctaClicked = false;
+    var _currentScrollDepth = 0;
+    var _maxScrollDepth = 0;
+
+    /* ── Unified tracker: GA4 + YM ── */
+    function track(event, params) {
+      if (typeof gtag === 'function') {
+        gtag('event', event, params);
+      }
+      if (typeof ym === 'function') {
+        ym(96171108, 'reachGoal', event, params);
+      }
+    }
+
+    /* ── Scroll depth throttle ── */
+    var _scrollThrottle;
+    window.addEventListener('scroll', function() {
+      clearTimeout(_scrollThrottle);
+      _scrollThrottle = setTimeout(function() {
+        _currentScrollDepth = Math.round(
+          (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight * 100
+        );
+        if (_currentScrollDepth > _maxScrollDepth) _maxScrollDepth = _currentScrollDepth;
+      }, 200);
+    }, { passive: true });
+
+    /* ── Landing opened ── */
+    document.addEventListener('DOMContentLoaded', function() {
+      _landingOpenedAt = Date.now();
+      track('7935_landing_opened', { var: variant });
+    });
+
+    /* ── Overlay ── */
+    function showSuccess() {
+      var overlay = document.getElementById('success-overlay');
+      overlay.style.display = 'flex';
+      _successShownAt = Date.now();
+      track('7935_success_shown', { var: variant });
+    }
+
+    function closeWebView() {
+      try {
+        if (window.AlfaInterface && window.AlfaInterface.closeWebView) {
+          window.AlfaInterface.closeWebView();
+        } else {
+          setTimeout(function() {
+            document.getElementById('bridge-fallback').style.display = 'block';
+          }, 2000);
+        }
+      } catch(e) {
+        setTimeout(function() {
+          document.getElementById('bridge-fallback').style.display = 'block';
+        }, 2000);
+      }
+    }
+    window.closeWebView = closeWebView;
+    window.showSuccess = showSuccess;
+
+    /* ── DOMContentLoaded: CTA + success-close ── */
+    document.addEventListener('DOMContentLoaded', function() {
+      /* CTA clicks */
+      var ctaBtns = document.querySelectorAll('[data-track="hero-cta"], [data-track="final-cta"]');
+      ctaBtns.forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          var ctaType = btn.getAttribute('data-track').replace('-cta', '');
+          track('7935_cta_clicked', {
+            var: variant,
+            dimension_1: ctaType,
+            dimension_2: Math.round((Date.now() - _landingOpenedAt) / 1000),
+            dimension_3: _currentScrollDepth
+          });
+          showSuccess();
+        });
+      });
+      /* success-close */
+      var successCloseBtn = document.querySelector('[data-track="success-close"]');
+      if (successCloseBtn) {
+        successCloseBtn.addEventListener('click', function() {
+          track('7935_success_closed', {
+            var: variant,
+            dimension_1: Math.round((Date.now() - _successShownAt) / 1000)
+          });
+          _ctaClicked = true;
+        });
+      }
+    });
+
+    /* ── Section scroll tracking ── */
+    var reported = {};
+    document.addEventListener('scroll', function() {
+      document.querySelectorAll('[data-track]').forEach(function(el) {
+        var track_id = el.getAttribute('data-track');
+        if (reported[track_id]) return;
+        var rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.75) {
+          reported[track_id] = true;
+          track('7935_section_scrolled', {
+            var: variant,
+            dimension_1: track_id,
+            dimension_2: _currentScrollDepth
+          });
+        }
+      });
+    }, { passive: true });
+
+    /* ── Landing closed without CTA ── */
+    document.addEventListener('visibilitychange', function() {
+      if (document.visibilityState === 'hidden' && !_ctaClicked) {
+        track('7935_landing_closed', {
+          var: variant,
+          dimension_1: Math.round((Date.now() - _landingOpenedAt) / 1000),
+          dimension_2: _maxScrollDepth
+        });
+      }
+    });
+  })();
+</script>
 
 </body>
 

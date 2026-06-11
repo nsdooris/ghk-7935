@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -423,7 +423,7 @@
     /* ── Landing opened ── */
     document.addEventListener('DOMContentLoaded', function() {
       _landingOpenedAt = Date.now();
-      track('trader_mode_landing_opened', { variant: variant });
+      track('7935_landing_opened', { var: variant });
     });
 
     /* ── Overlay ── */
@@ -431,7 +431,7 @@
       var overlay = document.getElementById('success-overlay');
       overlay.style.display = 'flex';
       _successShownAt = Date.now();
-      track('trader_mode_success_shown', { variant: variant });
+      track('7935_success_shown', { var: variant });
     }
 
     function closeWebView() {
@@ -460,11 +460,11 @@
         btn.addEventListener('click', function(e) {
           e.preventDefault();
           var ctaType = btn.getAttribute('data-track').replace('-cta', '');
-          track('trader_mode_cta_clicked', {
-            variant: variant,
-            cta_type: ctaType,
-            time_to_click_sec: Math.round((Date.now() - _landingOpenedAt) / 1000),
-            scroll_depth_pct_at_click: _currentScrollDepth
+          track('7935_cta_clicked', {
+            var: variant,
+            dimension_1: ctaType,
+            dimension_2: Math.round((Date.now() - _landingOpenedAt) / 1000),
+            dimension_3: _currentScrollDepth
           });
           showSuccess();
         });
@@ -474,9 +474,9 @@
       var successCloseBtn = document.querySelector('[data-track="success-close"]');
       if (successCloseBtn) {
         successCloseBtn.addEventListener('click', function() {
-          track('trader_mode_success_closed', {
-            variant: variant,
-            time_in_success_sec: Math.round((Date.now() - _successShownAt) / 1000)
+          track('7935_success_closed', {
+            var: variant,
+            dimension_1: Math.round((Date.now() - _successShownAt) / 1000)
           });
           _ctaClicked = true;
         });
@@ -492,10 +492,10 @@
         var rect = el.getBoundingClientRect();
         if (rect.top < window.innerHeight * 0.75) {
           reported[track_id] = true;
-          track('trader_mode_section_scrolled', {
-            variant: variant,
-            section_name: track_id,
-            scroll_depth_pct: _currentScrollDepth
+          track('7935_section_scrolled', {
+            var: variant,
+            dimension_1: track_id,
+            dimension_2: _currentScrollDepth
           });
         }
       });
@@ -504,10 +504,10 @@
     /* ── Landing closed without CTA ── */
     document.addEventListener('visibilitychange', function() {
       if (document.visibilityState === 'hidden' && !_ctaClicked) {
-        track('trader_mode_landing_closed', {
-          variant: variant,
-          time_spent_sec: Math.round((Date.now() - _landingOpenedAt) / 1000),
-          max_scroll_depth_pct: _maxScrollDepth
+        track('7935_landing_closed', {
+          var: variant,
+          dimension_1: Math.round((Date.now() - _landingOpenedAt) / 1000),
+          dimension_2: _maxScrollDepth
         });
       }
     });
